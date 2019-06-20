@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">FBIFingerDemo</string>
+
+
+    <string name="general_tips">Tips:</string>
+    <string name="general_exit">Are you sure to exit？</string>
+    <string name="general_yes">Yes</string>
+    <string name="general_no">No</string>
+
+
+    <!-- Device Type Spinner -->
+
+
+    <!-- Device Type Spinner -->
+    <string-array name="feature_format">
+        <item>Aratek Bione</item>
+        <item>ISO 19794-2:2005</item>
+        <item>ANSI 378-2004</item>
+    </string-array>
+
+    <string-array name="image_format">
+        <item>BMP</item>
+        <item>WSQ</item>
+        <item>RAW</item>
+        <item>ISO 19794-4:2005</item>
+        <item>ANSI 381-2004</item>
+    </string-array>
+
+
+    <string-array name="finger_position">
+        <item>Left Thumb</item>
+        <item>Left Index Finger</item>
+        <item>Left Middle Finger</item>
+        <item>Left Ring Finger</item>
+        <item>Left Little Finger</item>
+        <item>Right Thumb</item>
+        <item>Right Index Finger</item>
+        <item>Right Middle Finger</item>
+        <item>Right Ring Finger</item>
+        <item>Right Little Finger</item>
+    </string-array>
+
+
+    <string-array name="security_level">
+        <item>Level1</item>
+        <item>Level2</item>
+        <item>Level3</item>
+        <item>Level4</item>
+        <item>Level5</item>
+    </string-array>
+
+
+    <!-- tab lable -->
+    <string-array name="tabs_name">
+        <item>Capture</item>
+        <item>Enroll</item>
+        <item>Verify</item>
+        <item>Identify</item>
+        <!-- <item>Device Info</item>-->
+    </string-array>
+
+        <!-- Capture -->
+    <string name="lable_auto_save">Auto Save</string>
+    <string name="lable_feature_format">Feature Format</string>
+    <string name="lable_image_format">Image Format</string>
+
+    <!-- Enroll -->
+    <string name="lable_image_quality_threshold">Image Quality Threshold</string>
+    <string name="lable_user_id">User ID</string>
+    <string name="lable_user_first_name">FirstName</string>
+    <string name="lable_user_last_name">LastName</string>
+    <string name="lable_list_user_id">User ID</string>
+    <string name="lable_list_user_first_name">First Name</string>
+    <string name="lable_list_user_last_name">Last Name</string>
+    <string name="lable_list_user_finger_position">Finger Position</string>
+    <string name="no_enrolled_users">No enrolled users</string>
+    <string name="btn_import_user">Import User</string>
+    <string name="btn_remove_user">Remove User</string>
+    <string name="btn_remove_all">Remove All</string>
+    <string name="select_file">Select File</string>
+    <string name="lable_finger_position">Finger position</string>
+
+    <!-- Verify -->
+    <string name="lable_check_in_local_db">Check in local database(select a user)</string>
+    <string name="lable_file">File</string>
+    <string name="lable_security_level">Security Level</string>
+
+    <!-- Identify -->
+    <string name="btn_start_identify">Start Identify</string>
+    <string name="btn_stop_identify">Stop Identify</string>
+    <string name="lable_list_rank">Rank</string>
+    <string name="lable_list_similarity">Similarity</string>
+    <string name="no_results">No results</string>
+
+    <!-- Device Info -->
+
+    <!-- msg -->
+    <string name="msg_select_a_finger">Select a finger!</string>
+
+</resources>
