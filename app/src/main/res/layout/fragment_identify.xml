@@ -322,7 +322,7 @@
                 android:layout_height="400px"
                 android:background="@android:color/white">
 
-                <com.cw.fbifinger.widget.MyListView
+                <com.cw.fbb.widget.MyListView
                     android:id="@+id/lv_user_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

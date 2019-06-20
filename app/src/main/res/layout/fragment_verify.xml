@@ -136,7 +136,7 @@
                     android:layout_height="240px"
                     android:background="@android:color/white">
 
-                    <com.cw.fbifinger.widget.MyListView
+                    <com.cw.fbb.widget.MyListView
                         android:id="@+id/lv_user_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -172,6 +172,22 @@
                     android:textColor="@android:color/black" />
             </LinearLayout>
         </FrameLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/darker_gray"
+            android:visibility="visible" />
+        <Button
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/refresh_users"
+            android:textAllCaps="false"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"/>
 
         <View
             android:layout_width="fill_parent"
@@ -340,7 +356,7 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_left_lilttle"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
@@ -349,7 +365,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/f5_normal" />
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_left_ring"
                     android:layout_width="0dp"
                     android:layout_height="90dp"
@@ -358,7 +374,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/f4_normal" />
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_left_middle"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
@@ -367,7 +383,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/f3_normal" />
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_left_index"
                     android:layout_width="0dp"
                     android:layout_height="110dp"
@@ -376,7 +392,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/f2_normal" />
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_left_thumb"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
@@ -395,7 +411,7 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_right_thumb"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
@@ -404,7 +420,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/f1_normal" />
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_right_index"
                     android:layout_width="0dp"
                     android:layout_height="110dp"
@@ -414,7 +430,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/f2_normal" />
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_right_middle"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
@@ -424,7 +440,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/f3_normal" />
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_right_ring"
                     android:layout_width="0dp"
                     android:layout_height="90dp"
@@ -434,7 +450,7 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/f4_normal" />
 
-                <com.cw.fbifinger.widget.FingerView
+                <com.cw.fbb.widget.FingerView
                     android:id="@+id/fv_right_little"
                     android:layout_width="0dp"
                     android:layout_height="80dp"

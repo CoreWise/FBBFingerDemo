@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FBIFingerDemo</string>
+    <string name="app_name">FBBFingerDemo</string>
 
 
     <string name="general_tips">Tips:</string>
@@ -74,6 +74,8 @@
     <string name="lable_list_user_last_name">Last Name</string>
     <string name="lable_list_user_finger_position">Finger Position</string>
     <string name="no_enrolled_users">No enrolled users</string>
+        <string name="refresh_users">Click here refresh</string>
+
     <string name="btn_import_user">Import User</string>
     <string name="btn_remove_user">Remove User</string>
     <string name="btn_remove_all">Remove All</string>

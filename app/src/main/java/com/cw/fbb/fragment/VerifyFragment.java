@@ -2,6 +2,7 @@ package com.cw.fbb.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -29,6 +30,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -116,6 +118,9 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
     private ProgressBar mProgressBar_image_quality;
     private EditText mEditText_image_quality_threshold;
 
+    private Button mRefresh;
+
+
     private TextView mTextView_select_security_level;
     private PopupWindow popupWindow;
 
@@ -133,22 +138,15 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
     private FingerView currentFingerView;
     private FingerPosition mFingerPosition;
     private View root;
-    private long startTime, endTime;
     private String currentFilePath = "";
     private String currentFileName = "";
     private LargestFingerData largestFingerData = new LargestFingerData();
-   /* private ViewStatusCallback callback;
-    public void setLedCallback(ViewStatusCallback callback){
-        this.callback = callback;
-    }*/
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         if (root == null) {
             root = inflater.inflate(R.layout.fragment_verify, container, false);
             sv = (ScrollView) root.findViewById(R.id.sv_content);
@@ -177,8 +175,8 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
             mImageView_tips_image = (ImageView) root.findViewById(R.id.iv_tips_image);
             mTextView_tips_msg = (TextView) root.findViewById(R.id.tv_tips_msg);
 
-            mEditText_image_quality_threshold.setText((String) getParameterFromPreferences(MyApplication.VERIFY_IMAGE_QUALITY_THRESHOLD , null));
-            String level =  (String) getParameterFromPreferences(MyApplication.VERIFY_SECURITY_LEVEL, null);
+            mEditText_image_quality_threshold.setText((String) getParameterFromPreferences(MyApplication.VERIFY_IMAGE_QUALITY_THRESHOLD, null));
+            String level = (String) getParameterFromPreferences(MyApplication.VERIFY_SECURITY_LEVEL, null);
             mTextView_select_security_level.setText(level);
             switch (level) {
                 case "Level1":
@@ -219,7 +217,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    saveParameterToPreferences(MyApplication.VERIFY_IMAGE_QUALITY_THRESHOLD , s.toString());
+                    saveParameterToPreferences(MyApplication.VERIFY_IMAGE_QUALITY_THRESHOLD, s.toString());
                 }
             });
             mRadioButton_file.setOnClickListener(new View.OnClickListener() {
@@ -232,7 +230,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                     }
                     mLinearLayout_user_list.setVisibility(View.INVISIBLE);
                     mLinearLayout_file_path.setVisibility(View.VISIBLE);
-                    String feature_path = (String) getParameterFromPreferences(MyApplication.FEATURE_PATH , null);
+                    String feature_path = (String) getParameterFromPreferences(MyApplication.FEATURE_PATH, null);
                     Map<String, Integer> images = new HashMap<String, Integer>();
                     images.put(feature_path, R.drawable.filedialog_root);
                     images.put(OpenFileDialog.sParent, R.drawable.filedialog_folder_up);
@@ -247,10 +245,10 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                         public void callback(Bundle bundle) {
                             String fileName = bundle.getString("name");
                             String filePath = bundle.getString("path");
-                            if (!TextUtils.isEmpty(fileName)){
+                            if (!TextUtils.isEmpty(fileName)) {
                                 currentFileName = fileName;
                             }
-                            if (!TextUtils.isEmpty(filePath)){
+                            if (!TextUtils.isEmpty(filePath)) {
                                 currentFilePath = filePath;
                             }
                             mTextView_file_path.setText(currentFilePath);
@@ -306,14 +304,12 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                                     if (position != null) {
                                         fingerData.getFingerPositions().add(position);
                                         userFromFile.setFingerData(fingerData);
-                                    }
-                                    else {
+                                    } else {
                                         handleMsg("Import fail: unsupported file!", Color.RED);
                                         return;
                                     }
 
-                                }
-                                else {
+                                } else {
                                     handleMsg("Import fail, invalid file!", Color.RED);
                                     return;
                                 }
@@ -321,14 +317,13 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                                 sv.fullScroll(ScrollView.FOCUS_DOWN);
                                 showUserFingerData(mUser.getFingerData().getFingerPositions());
                                 doVerify();
-                            }
-                            else {
+                            } else {
                                 handleMsg("Import fail: unsupported file!", Color.RED);
                                 return;
                             }
 
                         }
-                    }, ".bione;.iso-fmr;.ansi-fmr;", images , feature_path);
+                    }, ".bione;.iso-fmr;.ansi-fmr;", images, feature_path);
                     dialog.show();
 
                 }
@@ -361,8 +356,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                 public boolean onTouch(View v, MotionEvent event) {
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         sv.requestDisallowInterceptTouchEvent(false);
-                    }
-                    else {
+                    } else {
                         sv.requestDisallowInterceptTouchEvent(true);
                     }
                     return false;
@@ -381,8 +375,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                         mPosition = -1;
                         myListAdapter.notifyDataSetInvalidated();
                         return;
-                    }
-                    else {
+                    } else {
                         myListAdapter.setSelectItem(position);
                         mPosition = position;
                     }
@@ -460,7 +453,26 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
         }
         viewCreated = true;
         mDBHelper = new DBHelper(getActivity(), MyApplication.SAVE_TO_SDCARD);
+
+
+        mRefresh = root.findViewById(R.id.refresh);
+        mRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadEnrolledUsers();
+
+            }
+        });
+
+
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadEnrolledUsers();
+
     }
 
     private void showPopupWindow() {
@@ -474,7 +486,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String level = parent.getItemAtPosition(position).toString();
                 mTextView_select_security_level.setText(level);
-                saveParameterToPreferences(MyApplication.VERIFY_SECURITY_LEVEL , level);
+                saveParameterToPreferences(MyApplication.VERIFY_SECURITY_LEVEL, level);
                 popupWindow.dismiss();
                 switch (level) {
                     case "Level1":
@@ -609,15 +621,11 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
         return true;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadEnrolledUsers();
-    }
 
     @Override
     public void onPause() {
         super.onPause();
+
         forceStop();
     }
 
@@ -707,8 +715,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                 enbleSettingsView(true);
                 handleMsg("Verify stopped", Color.BLACK);
                 return;
-            }
-            else {
+            } else {
                 currentFingerView.setSelected(false);
             }
         }
@@ -717,7 +724,6 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
         sv.fullScroll(ScrollView.FOCUS_DOWN);
         doVerify();
     }
-
 
 
     public void forceStop() {
@@ -746,13 +752,12 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void setDatas(TrustFingerDevice device) {
-        if (isAdded()){
+        if (isAdded()) {
             mTrustFingerDevice = device;
             if (device != null) {
                 if (viewCreated) {
                 }
-            }
-            else {
+            } else {
                 if (viewCreated) {
                     forceStop();
                     enbleSettingsView(true);
@@ -802,30 +807,30 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                     break;
                 }
                 boolean isFakeFinger = false;
-                if (largestFingerData.isIsrRaise()){
-                    MediaPlayerHelper.payMedia(getContext() , R.raw.please_press_your_finger);
+                if (largestFingerData.isIsrRaise()) {
+                    MediaPlayerHelper.payMedia(getContext(), R.raw.please_press_your_finger);
                     largestFingerData.setIsrRaise(false);
                 }
                 try {
-                    if (mTrustFingerDevice.getLfdLevel() != LfdLevel.OFF){
+                    if (mTrustFingerDevice.getLfdLevel() != LfdLevel.OFF) {
                         int[] lfdStatus = new int[1];
                         fpImage_Raw = mTrustFingerDevice.captureRawDataLfd(lfdStatus);
-                        if (lfdStatus[0] == LfdStatus.FAKE){
+                        if (lfdStatus[0] == LfdStatus.FAKE) {
                             handleMsg("fake finger", Color.RED);
                             isFakeFinger = true;
-                        }else if (lfdStatus[0] == LfdStatus.UNKNOWN){
+                        } else if (lfdStatus[0] == LfdStatus.UNKNOWN) {
                             handleMsg("unknown finger", Color.RED);
-                        }else{
+                        } else {
                             handleMsg("", Color.RED);
                         }
-                    }else{
+                    } else {
                         fpImage_Raw = mTrustFingerDevice.captureRawData();
                     }
                     if (fpImage_Raw == null) {
                         imageQuality = 0;
                         publishProgress(0);
                         updateFingerprintImage(null);
-                    }else{
+                    } else {
                         if (mTrustFingerDevice == null) {
 
                             handleMsg("Device not opened", Color.RED);
@@ -857,28 +862,26 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                             fpFeatureData = mTrustFingerDevice.extractFeature(fpImage_Raw,
                                     FingerPosition.Unknown);
                             if (fpFeatureData != null) {
-                                if (!largestFingerData.isThreshold()){
+                                if (!largestFingerData.isThreshold()) {
 
                                     largestFingerData.setThreshold(true);
-                                    MediaPlayerHelper.payMedia(getContext() , R.raw.please_raise_your_finger);
+                                    MediaPlayerHelper.payMedia(getContext(), R.raw.please_raise_your_finger);
                                 }
-                                if (imageQuality > largestFingerData.getImgQuality()){
-                                    largestFingerData.update(fpFeatureData , imageQuality , fpImage_bitmap);
+                                if (imageQuality > largestFingerData.getImgQuality()) {
+                                    largestFingerData.update(fpFeatureData, imageQuality, fpImage_bitmap);
                                 }
-                            }
-                            else {
+                            } else {
                                 handleMsg("Extract feature failed! ", Color.RED);
                             }
                         }
                     }
-                if (!isFakeFinger && (imageQuality < 20 || imageQuality == 0)  && !largestFingerData.isIsrRaise() && largestFingerData.getImgQuality() >= mImageQualityThrethold){
+                    if (!isFakeFinger && (imageQuality < 20 || imageQuality == 0) && !largestFingerData.isIsrRaise() && largestFingerData.getImgQuality() >= mImageQualityThrethold) {
                         fpFeatureData = largestFingerData.getFpFeatureData();
                         updateFingerprintImage(largestFingerData.getFpImage_bitmap());
                         publishProgress(largestFingerData.getImgQuality());
                         break;
                     }
-                }
-                catch (TrustFingerException e) {
+                } catch (TrustFingerException e) {
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_VERIFY_WARNING, "Verify " +
                             "exception:" + e.getType().toString()));
                     handleMsg("Verify exception: " + e.getType().toString(), Color.RED);
@@ -901,7 +904,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
             }
             try {
                 FingerData fingerData = null;
-                if (mUser != null){
+                if (mUser != null) {
                     fingerData = mUser.getFingerData();
                 }
 
@@ -972,21 +975,18 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                             if (result.isMatched) {
                                 matched = true;
                                 break;
-                            }
-                            else {
+                            } else {
                                 Log.e(TAG, "" + result.similarity);
                             }
                         }
-                    }
-                    else {
+                    } else {
                         Log.e(TAG, "verify fail, no enrolled template");
                     }
                 }
                 if (matched) {
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_VERIFY_SUCCESS, result
                             .similarity, 0, fingerPosition));
-                }
-                else {
+                } else {
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_VERIFY_FAIL, "Verify fail!"));
                 }
                 getActivity().runOnUiThread(new Runnable() {
@@ -995,8 +995,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                         enbleSettingsView(true);
                     }
                 });
-            }
-            catch (TrustFingerException e) {
+            } catch (TrustFingerException e) {
 
                 mHandler.sendMessage(mHandler.obtainMessage(MSG_VERIFY_WARNING, "Verify " +
                         "exception:" + e.getType().toString()));
@@ -1041,8 +1040,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
             while (!mIsDone) {
                 try {
                     Thread.sleep(50);
-                }
-                catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
             }
@@ -1085,8 +1083,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                     if (bmp_fpImg == null) {
                         mImageView_fingerprint.setImageDrawable(getResources().getDrawable(R
                                 .drawable.nofinger));
-                    }
-                    else {
+                    } else {
                         mImageView_fingerprint.setImageBitmap(bmp_fpImg);
                     }
 
@@ -1099,8 +1096,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                     if (bmp_fpImg_1 == null) {
                         mImageView_fingerprint_1.setImageDrawable(getResources().getDrawable(R
                                 .drawable.nofinger));
-                    }
-                    else {
+                    } else {
                         mImageView_fingerprint_1.setImageBitmap(bmp_fpImg_1);
                     }
                     int imageQuality_1 = msg.arg1;
@@ -1114,8 +1110,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                     if (bmp_fpImg_2 == null) {
                         mImageView_fingerprint_2.setImageDrawable(getResources().getDrawable(R
                                 .drawable.nofinger));
-                    }
-                    else {
+                    } else {
                         mImageView_fingerprint_2.setImageBitmap(bmp_fpImg_2);
                     }
                     int imageQuality_2 = msg.arg1;
@@ -1129,8 +1124,7 @@ public class VerifyFragment extends BaseFragment implements View.OnClickListener
                     if (bmp_fpImg_3 == null) {
                         mImageView_fingerprint_3.setImageDrawable(getResources().getDrawable(R
                                 .drawable.nofinger));
-                    }
-                    else {
+                    } else {
                         mImageView_fingerprint_3.setImageBitmap(bmp_fpImg_3);
                     }
                     int imageQuality_3 = msg.arg1;
