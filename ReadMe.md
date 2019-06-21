@@ -21,9 +21,9 @@
 
    1.2 FBB指纹功能占用了机器唯一的USB口
 
-   1.3 FBB指纹开发包兼容机器请查看: [FBB指纹开发包兼容机器说明](https://github.com/CoreWise/CWDemo#user-content-zh)
+   1.3 FBB指纹开发包兼容机器: u3,u8,新370
 
-   1.4 [FBB指纹开发包下载地址](https://github.com/CoreWise/CWDemo#user-content-zh)
+   1.4 [FBB指纹开发包下载地址,请下载指定源码，当中有开发包](https://github.com/CoreWise/FBBFingerDemo/releases)
 
 ### 二次开发说明
 
@@ -146,7 +146,7 @@ OnUSBFingerListener回调接口说明:
 
    1.2 FBB fingerprint function occupies the machine's unique USB port
 
-   1.3 [FBB fingerprint development kit download address](https://github.com/CoreWise/CWDemo#user-content-zh)
+   1.3 [FBB fingerprint development kit download address](https://github.com/CoreWise/FBBFingerDemo/releases)
 
 <a name="112"></a>
 ### Secondary development instructions
