@@ -17,7 +17,7 @@ import com.cw.serialportsdk.cw;
 /**
  * 作者：李阳
  * 时间：2019/6/12
- * 描述：
+ * 描述：此处只是判断机型设置相应的横竖屏，对二次开发没啥影响
  */
 public abstract class BaseActivity extends FragmentActivity {
 

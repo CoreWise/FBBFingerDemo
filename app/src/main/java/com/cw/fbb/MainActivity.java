@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends FragmentActivity implements DeviceOpenListener {
+public class MainActivity extends BaseActivity implements DeviceOpenListener {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
