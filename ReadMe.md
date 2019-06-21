@@ -239,7 +239,9 @@ OnUSBFingerListener Callback interface description:
 
 - ##### Open and initialize the fingerprint module
 
+
 ![bigfingerusb.png](https://i.loli.net/2019/05/08/5cd24e0add367.png)
+
 
 - ##### Fingerprint Module API Documentation Description
 

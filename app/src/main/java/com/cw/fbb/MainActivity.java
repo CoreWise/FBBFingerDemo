@@ -208,7 +208,9 @@ public class MainActivity extends FragmentActivity implements DeviceOpenListener
     protected void onStop() {
         super.onStop();
         try {
-            mTrustFingerDevice.close();
+            if (mTrustFingerDevice!=null) {
+                mTrustFingerDevice.close();
+            }
             mTrustFingerDevice = null;
             isDeviceOpened = false;
             setFragmentDatas(null);
@@ -250,25 +252,5 @@ public class MainActivity extends FragmentActivity implements DeviceOpenListener
     }
 
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-            builder.setTitle(R.string.general_tips);
-            builder.setMessage(R.string.general_exit);
-            //设置确定按钮
-            builder.setNegativeButton(R.string.general_yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            });
-            //设置取消按钮
-            builder.setPositiveButton(R.string.general_no, null);
-            //显示提示框
-            builder.show();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
 }
