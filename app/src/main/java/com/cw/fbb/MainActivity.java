@@ -1,5 +1,6 @@
 package com.cw.fbb;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -12,6 +13,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +36,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
 
-public class MainActivity extends BaseActivity implements DeviceOpenListener {
+
+public class MainActivity extends FragmentActivity implements DeviceOpenListener {
+
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
@@ -43,7 +50,6 @@ public class MainActivity extends BaseActivity implements DeviceOpenListener {
 
     private TrustFinger mTrustFinger;
     protected TrustFingerDevice mTrustFingerDevice;
-
 
 
     private List<Fragment> fragmnts = new ArrayList<Fragment>();
@@ -55,6 +61,7 @@ public class MainActivity extends BaseActivity implements DeviceOpenListener {
     private Handler handler = new Handler();
     private int mDeviceId = 0;
     private boolean isDeviceOpened = false;
+    boolean isRelease = true;//默认是释放状态
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +69,12 @@ public class MainActivity extends BaseActivity implements DeviceOpenListener {
         setContentView(R.layout.activity_main);
         findViews();
 
+
         init();
+
+
     }
+
 
     private void init() {
         initDatas();
@@ -72,7 +83,6 @@ public class MainActivity extends BaseActivity implements DeviceOpenListener {
             file.mkdirs();
         }
     }
-
 
 
     private void findViews() {
@@ -85,7 +95,11 @@ public class MainActivity extends BaseActivity implements DeviceOpenListener {
     private void initTrustFinger() {
         try {
             mTrustFinger = TrustFinger.getInstance(this.getApplicationContext());
-            mTrustFinger.initialize();
+            if (isRelease) {
+                mTrustFinger.initialize();
+                isRelease = false;
+            }
+
             mTrustFinger.setDeviceListener(new DeviceListener() {
                 @Override
                 public void deviceAttached(List<String> deviceList) {
@@ -181,10 +195,12 @@ public class MainActivity extends BaseActivity implements DeviceOpenListener {
     protected void onStart() {
         super.onStart();
         MyApplication.getInstance().showProgressDialog(this, "Loading");
+
         USBFingerManager.getInstance(this).openUSB(new USBFingerManager.OnUSBFingerListener() {
             @Override
             public void onOpenUSBFingerSuccess(String device, UsbManager mUsbManager, UsbDevice mDevice) {
                 MyApplication.getInstance().cancleProgressDialog();
+
                 initTrustFinger();
                 mDeviceId = 0;
                 try {
@@ -199,16 +215,19 @@ public class MainActivity extends BaseActivity implements DeviceOpenListener {
             public void onOpenUSBFingerFailure(String error) {
                 MyApplication.getInstance().cancleProgressDialog();
                 Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                handleMsg(error, Color.GREEN);
+
             }
 
         });
     }
 
+
     @Override
     protected void onStop() {
         super.onStop();
         try {
-            if (mTrustFingerDevice!=null) {
+            if (mTrustFingerDevice != null) {
                 mTrustFingerDevice.close();
             }
             mTrustFingerDevice = null;
@@ -216,7 +235,11 @@ public class MainActivity extends BaseActivity implements DeviceOpenListener {
             setFragmentDatas(null);
             handleMsg("Device closed!", Color.RED);
             if (mTrustFinger != null) {
-                mTrustFinger.release();
+                if (!isRelease) {
+                    mTrustFinger.release();
+                    isRelease = true;
+
+                }
             }
             USBFingerManager.getInstance(this).closeUSB();
         } catch (TrustFingerException e) {
@@ -251,6 +274,28 @@ public class MainActivity extends BaseActivity implements DeviceOpenListener {
         isDeviceOpened = false;
     }
 
+
+     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+            builder.setTitle(R.string.general_tips);
+            builder.setMessage(R.string.general_exit);
+
+            //设置确定按钮
+            builder.setNegativeButton(R.string.general_yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            //设置取消按钮
+            builder.setPositiveButton(R.string.general_no, null);
+            //显示提示框
+            builder.show();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 
 }

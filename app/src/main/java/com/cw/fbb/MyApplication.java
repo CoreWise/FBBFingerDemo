@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 
+import com.cw.fbb.utils.CrashHandler;
+
 import java.io.File;
 
 
@@ -53,6 +55,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         app=this;
+        CrashHandler.getInstance().init(this);
 
         sp = getSharedPreferences(SHAREDPREFERENCE_NAME, Context.MODE_PRIVATE);
         editor = sp.edit();
