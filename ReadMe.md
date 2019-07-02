@@ -63,6 +63,9 @@
     //FBB FingerPrint SDK
     compile(name: 'fp_fbb_sdk_20190620', ext: 'aar')
 
+    //SerialPort SDK,需要串口管理类中的USB管理类
+    compile(name: 'serialport_sdk_20190702', ext: 'aar')
+
  }
 
 ```
@@ -188,6 +191,8 @@ OnUSBFingerListener回调接口说明:
     //FBB FingerPrint SDK
     compile(name: 'fp_fbb_sdk_20190620', ext: 'aar')
 
+    //SerialPort SDK,need usbmanager class
+    compile(name: 'serialport_sdk_20190702', ext: 'aar')
  }
 
 ```

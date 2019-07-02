@@ -55,8 +55,8 @@ dependencies {
 
 
     //FBB SDK
-    compile(name: 'fp_fbb_sdk_20190620', ext: 'aar')
+    compile(name: 'fp_fbb_sdk_20190628', ext: 'aar')
 
-        //FBB SDK
-    compile(name: 'serialport_sdk_20190612', ext: 'aar')
+        //SerialPort SDK
+    compile(name: 'serialport_sdk_20190702', ext: 'aar')
 }

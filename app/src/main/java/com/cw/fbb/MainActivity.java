@@ -1,6 +1,5 @@
 package com.cw.fbb;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -13,8 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.view.View;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +28,12 @@ import com.cw.fbb.fragment.EnrollFragment;
 import com.cw.fbb.fragment.IdentifyFragment;
 import com.cw.fbb.fragment.VerifyFragment;
 import com.cw.fbb.utils.MediaPlayerHelper;
-import com.cw.fpgabsdk.USBFingerManager;
+import com.cw.serialportsdk.usbFingerManager.USBFingerManager;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.namee.permissiongen.PermissionGen;
-import kr.co.namee.permissiongen.PermissionSuccess;
 
 
 public class MainActivity extends FragmentActivity implements DeviceOpenListener {
