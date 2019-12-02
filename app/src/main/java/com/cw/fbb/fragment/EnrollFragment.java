@@ -140,7 +140,6 @@ public class EnrollFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     private void resetFingerViews() {
